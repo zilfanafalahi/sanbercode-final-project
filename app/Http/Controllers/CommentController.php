@@ -51,37 +51,56 @@ class CommentController extends Controller
         return redirect("/answers/$q_id/$id/comments");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    
+    public function edit_question($q_id,$id)
     {
-        //
+        $question = Question::find($q_id);
+        $comment = Comment::find($id);
+
+        return view('comments.edit_question', compact('question','comment'));
+    }
+    
+    public function edit_answer($q_id,$a_id,$id)
+    {
+        $question = Question::find($q_id);
+        $answer = Answer::find($a_id);
+        $comment = Comment::find($id);
+
+        return view('comments.edit_answer', compact('question','answer','comment'));
+    }
+    public function update_question(Request $request, $q_id, $id)
+    {
+        unset($request["_token"]);
+        unset($request["_method"]);
+        // dd($request->all());
+        $comment = Comment::find($id);
+        $comment -> update($request->all());
+        return redirect("/questions/$q_id/comments");
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update_answer(Request $request, $q_id, $a_id,$id)
     {
-        //
+        unset($request["_token"]);
+        unset($request["_method"]);
+        // dd($request->all());
+        $comment = Comment::find($id);
+        $comment -> update($request->all());
+        return redirect("/answers/$q_id/$a_id/comments");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy_question($q_id,$id)
     {
-        //
+        $comment = Comment::find($id);
+        $comment -> questions() -> detach();
+        $comment->delete();
+        return redirect("/questions/$q_id/comments");
+    }
+
+    public function destroy_answer($q_id,$a_id,$id)
+    {
+        $comment = Comment::find($id);
+        $comment -> answers() -> detach();
+        $comment->delete();
+        return redirect("/answers/$q_id/$a_id/comments");
     }
 }
