@@ -35,16 +35,17 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request, $id)
     {      
-        // dd($request->all()['isi']);
         $new_answers = new Answer([
             'isi'=> $request->all()['isi'],
-            'answer_user_id' => Auth::id()]);
-        $question = Question::find($id);
-        $question -> Answers() -> save($new_answers);
+            'answer_user_id' => Auth::id()
+        ]);
 
-        return redirect('/answers/'.$id);
+        $question = Question::find($id);
+        $question->Answers()->save($new_answers);
+
+        return redirect()->back();
     }
 
     /**
