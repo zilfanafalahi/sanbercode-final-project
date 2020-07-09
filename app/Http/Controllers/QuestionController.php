@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Question;
 use App\Answer;
+use App\Comment;
 
 class QuestionController extends Controller
 {
@@ -108,7 +109,7 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         $questions = Question::find($id);
-        $questions->Answers()->delete();
+        $questions->Answers()->comments()->delete();
         $questions->delete();
 
         return redirect('/questions');

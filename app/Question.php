@@ -15,6 +15,6 @@ class Question extends Model
 
     public function comments()
     {
-        return $this->belongsToMany('App\Comment','comment_questions');
+        return $this->belongsToMany('App\Comment', 'comment_questions');
     }
 }
