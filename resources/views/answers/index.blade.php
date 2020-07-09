@@ -30,11 +30,17 @@
     @foreach ($answers as $answer)
         <div class="card text-left my-2">
             <div class="card-body">
-                <div class="row">
-                  <h4><b>Jawaban #{{ $answer->id }}</b></h4>
-                  <a href="/answers/{{$question->id}}/{{$answer->id}}/comments" class="btn btn-secondary ml-auto btn-sm">Show Comments</a>
-                </div>
-                <p class="card-text">{!! $answer->isi !!}</p>
+              <h4><b>Jawaban #{{ $answer->id }}</b></h4>
+              <p class="card-text">{!! $answer->isi !!}</p>
+              <div>
+                <a href="/answers/{{$question->id}}/{{$answer->id}}/comments" class="btn btn-secondary mr-1 btn-sm">Show Comments</a>
+                <a href="/answers/{{$question->id}}/{{$answer->id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
+                <form action="/answers/{{$question->id}}/{{$answer->id}}" method="POST" class="d-inline">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
+                </form>
+              </div>
             </div>
         </div>
     @endforeach
