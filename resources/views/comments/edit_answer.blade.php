@@ -39,41 +39,19 @@
             </div>
         </div>
         <div class="col-md-11">
-            @if (count($comments) > 0)
-                @foreach ($comments as $item)
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <i>{!! $item->isi !!}</i>
-                            </div>
-                            <div class="card-footer">
-                              <a href="comments/{{$item -> id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
-                              <form action="comments/{{$item -> id}}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
-                              </form>
-                            </div>
+            <div class="card bg-light">
+                <div class="card-body">
+                    <form action="/answers/{{$question->id}}/{{$answer->id}}/comments/{{ $comment -> id }}" method="post">
+                        @csrf
+                        @method("PUT")
+                        <div class="form-group">
+                        <textarea class="form-control my-editor" name="isi" rows="3">{{ $comment->isi }}</textarea>
                         </div>
-                @endforeach
-            @else
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <i>There is no comment... Make One Below..</i>
-                    </div>
-                </div>
-            @endif
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <form action="/questions/{{$question->id}}/comments" method="post">
-                            @csrf
-                            <div class="form-group">
-                              <textarea class="form-control my-editor" name="isi" rows="3" placeholder="Write Your Comment Here.. :') "></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
+        </div>
     </div>
 @endsection
 

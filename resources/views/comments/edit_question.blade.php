@@ -5,7 +5,7 @@
 @endpush
 
 @section('content')
-    <a href="/answers/{{$question->id}}" class="btn btn-warning mb-2">Kembali</a>
+    <a href="/answers/{{$question->id}}/comments" class="btn btn-warning mb-2">Kembali</a>
   <div class="card text-left">
     <div class="card-body">
       <h3><b>{{ $question->judul }}</b></h3>
@@ -26,35 +26,13 @@
         </div>
     </div>
     <div class="col-md-11">
-    @if (count($comments) > 0)
-        @foreach ($comments as $item)
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <i>{!! $item->isi !!}</i>
-                    </div>
-                    <div class="card-footer">
-                      <a href="comments/{{$item -> id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
-                      <form action="comments/{{$item -> id}}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
-                      </form>
-                    </div>
-                </div>
-        @endforeach
-    @else
         <div class="card bg-light">
             <div class="card-body">
-                <i>There is no comment... Make One Below..</i>
-            </div>
-        </div>
-    @endif
-        <div class="card bg-light">
-            <div class="card-body">
-                <form action="/questions/{{$question->id}}/comments" method="post">
+                <form action="/questions/{{$question->id}}/comments/{{ $comment -> id }}" method="post">
                     @csrf
+                    @method('PUT')
                     <div class="form-group">
-                      <textarea class="form-control my-editor" name="isi" rows="3" placeholder="Write Your Comment Here.. :') "></textarea>
+                      <textarea class="form-control my-editor" name="isi" rows="3" placeholder="Write Your Comment Here.. :') ">{!! $comment->isi !!}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
