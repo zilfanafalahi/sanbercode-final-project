@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Question;
+use App\Answer;
 
 class QuestionController extends Controller
 {
@@ -106,7 +107,10 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        $questions = Question::find($id)->delete();
+        $questions = Question::find($id);
+        $questions->Answers()->delete();
+        $questions->delete();
+
         return redirect('/questions');
     }
 }
