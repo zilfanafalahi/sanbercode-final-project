@@ -28,7 +28,11 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 // Route CRUD
-Route::resource('answers', 'AnswerController');
+Route::get('answers/{id}', 'AnswerController@show');
+Route::post('answers/{id}', 'AnswerController@store');
+Route::get('answers/{q_id}/{id}/edit', 'AnswerController@edit');
+Route::put('answers/{q_id}/{id}', 'AnswerController@update');
+Route::delete('answers/{q_id}/{id}', 'AnswerController@destroy');
 Route::post('answers/{id}', 'AnswerController@store');
 Route::get('/questions/{id}/comments', 'CommentController@show_question');
 Route::post('/questions/{id}/comments', 'CommentController@store_question');
