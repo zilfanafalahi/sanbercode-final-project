@@ -29,6 +29,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 
 // Route CRUD
 Route::resource('answers', 'AnswerController');
+Route::post('answers/{id}', 'AnswerController@store');
 Route::resource('comments', 'CommentController');
 Route::resource('questions', 'QuestionController');
 Route::resource('reputations', 'ReputationController');
