@@ -13,5 +13,10 @@ class Answer extends Model
     {
         return $this->belongsTo('App\Question');
     }
+
+    public function comments()
+    {
+        return $this->belongsToMany('App\Comment','answer_comments');
+    }
 }
 

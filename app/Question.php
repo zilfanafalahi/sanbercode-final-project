@@ -12,4 +12,9 @@ class Question extends Model
     {
         return $this->hasMany('App\Answer');
     }
+
+    public function comments()
+    {
+        return $this->belongsToMany('App\Comment','comment_questions');
+    }
 }
