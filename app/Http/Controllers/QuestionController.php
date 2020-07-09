@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Question;
 
 class QuestionController extends Controller
 {
@@ -13,7 +15,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::all();
+        return view('questions.index', compact('questions'));
     }
 
     /**
@@ -23,7 +26,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('questions.create');
     }
 
     /**
@@ -34,7 +37,22 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'judul' => 'required',
+            'isi' => 'required',
+            'tag' => 'required'
+        ]);
+        
+        $user = Auth::id();
+
+        $new_questions = Question::create([
+            "judul" => $request['judul'],
+            "isi" => $request['isi'],
+            "tag" => $request['tag'],
+            "users_id" => $user
+        ]);
+        
+        return redirect('/questions');
     }
 
     /**
@@ -45,7 +63,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $questions = Question::find($id);
+        return view('questions.show', compact('questions'));
     }
 
     /**
@@ -56,7 +75,8 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $questions = Question::find($id);
+        return view('questions.edit', compact('questions'));
     }
 
     /**
@@ -68,7 +88,14 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'judul' => 'required',
+            'isi' => 'required',
+            'tag' => 'required'
+        ]);
+
+        $questions = Question::find($id)->update($request->all());
+        return redirect('/questions');
     }
 
     /**
@@ -79,6 +106,7 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $questions = Question::find($id)->delete();
+        return redirect('/questions');
     }
 }
