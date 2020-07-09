@@ -30,7 +30,7 @@
         @foreach ($comments as $item)
                 <div class="card bg-secondary">
                     <div class="card-body">
-                        <i>{{ $item->isi }}</i>
+                        <i>{!! $item->isi !!}</i>
                     </div>
                 </div>
         @endforeach
@@ -46,7 +46,7 @@
                 <form action="/questions/{{$question->id}}/comments" method="post">
                     @csrf
                     <div class="form-group">
-                      <textarea class="form-control" name="isi" rows="3" placeholder="Write Your Comment Here.. :') "></textarea>
+                      <textarea class="form-control my-editor" name="isi" rows="3" placeholder="Write Your Comment Here.. :') "></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
