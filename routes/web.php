@@ -26,3 +26,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+// Route CRUD
+Route::resource('answers', 'AnswerController');
+Route::resource('comments', 'CommentController');
+Route::resource('questions', 'QuestionController');
+Route::resource('reputations', 'ReputationController');
+Route::resource('votes', 'VoteController');
