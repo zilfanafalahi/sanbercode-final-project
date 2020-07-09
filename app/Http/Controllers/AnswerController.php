@@ -9,32 +9,9 @@ use App\Answer;
 
 class AnswerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request, $id)
     {      
         $new_answers = new Answer([
@@ -48,12 +25,6 @@ class AnswerController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $question = Question::find($id);
@@ -61,37 +32,32 @@ class AnswerController extends Controller
         return view('answers.index', compact('question','answers'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function edit($q_id,$id)
+    {   
+        $question = Question::find($q_id);
+        $answer = Answer::find($id);
+        return view('answers.edit', compact('question','answer'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+
+    public function update(Request $request, $q_id,$id)
+    {   
+        unset($request['_token']);
+        unset($request['_method']);
+        $answer = Answer::find($id);
+        $answer -> update($request->all());
+        return redirect("/answers/$q_id");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy($q_id,$id)
     {
-        //
+        $answer = Answer::find($id);
+        $comment = $answer -> comments;
+        $answer -> comments()-> detach();
+        foreach ($comment as $comments){
+            $comments -> delete();
+        };
+        $answer -> delete();
+        return redirect("answers/$q_id");
     }
 }
