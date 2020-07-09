@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Question;
+use App\Answer;
+
 class AnswerController extends Controller
 {
     /**
@@ -32,9 +35,16 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request,$id)
+    {      
+        // dd($request->all()['isi']);
+        $new_answers = new Answer([
+            'isi'=> $request->all()['isi'],
+            'answer_user_id' => Auth::id()]);
+        $question = Question::find($id);
+        $question -> Answers() -> save($new_answers);
+
+        return redirect('/answers/'.$id);
     }
 
     /**
@@ -45,7 +55,9 @@ class AnswerController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = Question::find($id);
+        $answers = $question->Answers;
+        return view('answers.index', compact('question','answers'));
     }
 
     /**
