@@ -10,6 +10,11 @@ use App\Comment;
 class CommentController extends Controller
 {   
     // Question - comment
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function show_question($id)
     {
         $question = Question::find($id);

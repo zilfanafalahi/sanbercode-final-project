@@ -10,6 +10,11 @@ use App\Comment;
 
 class QuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -112,6 +117,8 @@ class QuestionController extends Controller
         $answers = $questions->answers;
         $comments = $questions->comments;
         $questions->comments()->detach();
+        // dd($questions);
+        $questions->delete();
 
         return redirect('/questions');
     }
