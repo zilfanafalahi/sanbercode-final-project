@@ -34,14 +34,16 @@
                     <div class="card-body">
                         <i>{!! $item->isi !!}</i>
                     </div> 
-                    <div class="card-footer">
-                      <a href="comments/{{$item -> id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
-                      <form action="comments/{{$item -> id}}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
-                      </form>
-                    </div>
+                    @if(Auth::check() && (Auth::user()->id == $item->comment_user_id)) 
+                      <div class="card-footer">
+                        <a href="comments/{{$item -> id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
+                        <form action="comments/{{$item -> id}}" method="POST" class="d-inline">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
+                        </form>
+                      </div>
+                    @endif
                 </div>
         @endforeach
     @else

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Question;
 use App\Answer;
 use App\Comment;
@@ -28,8 +29,11 @@ class CommentController extends Controller
     {
         $question = Question::find($id);
         unset($request["_token"]);
-        // dd($request->all());
-        $new_comment = Comment::create($request->all());
+        $user = Auth::id();
+        $new_comment = Comment::create([
+            'isi' => $request['isi'],
+            'comment_user_id' => $user
+        ]);
         $question -> comments() -> attach($new_comment);
         return redirect('/questions/'.$id.'/comments');
     }
@@ -50,9 +54,12 @@ class CommentController extends Controller
     {
         $answer = answer::find($id);
         unset($request["_token"]);
-        $new_comment = Comment::create($request->all());
+        $user = Auth::id();
+        $new_comment = Comment::create([
+            'isi' => $request['isi'],
+            'comment_user_id' => $user
+        ]);
         $answer -> comments() -> attach($new_comment);
-        // dd($new_comment);
         return redirect("/answers/$q_id/$id/comments");
     }
 

@@ -41,12 +41,14 @@
             <div class="card-footer">
               <div>
                 <a href="/answers/{{$question->id}}/{{$answer->id}}/comments" class="btn btn-secondary mr-1 btn-sm">Show Comments</a>
-                <a href="/answers/{{$question->id}}/{{$answer->id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
-                <form action="/answers/{{$question->id}}/{{$answer->id}}" method="POST" class="d-inline">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
-                </form>
+                @if(Auth::check() && (Auth::user()->id == $answer->answer_user_id)) 
+                  <a href="/answers/{{$question->id}}/{{$answer->id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
+                  <form action="/answers/{{$question->id}}/{{$answer->id}}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
+                  </form>
+                @endif
               </div>
             </div>
         </div>

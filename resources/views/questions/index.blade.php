@@ -17,12 +17,14 @@
         <div class="card-footer">
           <a href="/answers/{{ $q->id }}" class="btn btn-success btn-sm">Show answers</a>
           <a href="/questions/{{ $q->id }}" class="btn btn-primary btn-sm">Detail questions</a>
-          <a href="/questions/{{ $q->id }}/edit" class="btn btn-primary btn-sm">Edit questions</a>
-          <form action="/questions/{{ $q->id }}" method="POST" class="d-inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="d-inline-block btn btn-danger btn-sm ">Delete questions</button>
-          </form>
+          @if(Auth::check() && (Auth::user()->id == $q->users_id)) 
+            <a href="/questions/{{ $q->id }}/edit" class="btn btn-primary btn-sm">Edit questions</a>
+            <form action="/questions/{{ $q->id }}" method="POST" class="d-inline">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="d-inline-block btn btn-danger btn-sm ">Delete questions</button>
+            </form>
+          @endif
         </div>
       </div>
     @endforeach
