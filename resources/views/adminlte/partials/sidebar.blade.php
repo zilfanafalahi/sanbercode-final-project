@@ -15,7 +15,7 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-header">MAIN MENU</li>
         <li class="nav-item">
-          <a href="../calendar.html" class="nav-link">
+          <a href="/questions" class="nav-link">
             <i class="nav-icon fas fa-table"></i>
             <p>
               Stackoverflow
