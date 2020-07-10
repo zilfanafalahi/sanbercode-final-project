@@ -16,7 +16,7 @@
         @foreach (explode(' ', $question->tag) as $tag)
           <button class="btn btn-success btn-sm mx-1">{{ $tag }}</button>
         @endforeach
-        <a href="/questions/{{$question->id}}/comments" class="btn btn-info ml-auto">Show Comments</a>
+        <a href="/questions/{{$question->id}}/comments" class="btn btn-info btn-sm ml-auto">Show Comments</a>
       </div>
     </div>
     <div class="card-footer text-muted">
