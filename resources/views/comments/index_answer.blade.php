@@ -12,11 +12,11 @@
                 <h3><b>{{ $question->judul }}</b></h3>
                 <a href="/answers/{{ $question->id }}" class="btn btn-warning ml-auto">Kembali</a>
             </div>
+            @foreach (explode(' ', $question->tag) as $tag)
+                <span class="badge badge-success badge-pill">{{ $tag }}</span>
+            @endforeach
             <p class="card-text">{!! $question->isi !!}</p>
             <div class="row">
-                @foreach (explode(' ', $question->tag) as $tag)
-                <button class="btn btn-success btn-sm mx-1">{{ $tag }}</button>
-                @endforeach
                 <a href="/questions/{{$question->id}}/comments" class="btn btn-info btn-sm ml-auto">Show Comments</a>
             </div>
         </div>

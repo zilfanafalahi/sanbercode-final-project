@@ -9,10 +9,10 @@
   <div class="card text-left">
     <div class="card-body">
       <h3><b>{{ $question->judul }}</b></h3>
-      <p class="card-text">{!! $question->isi !!}</p>
       @foreach (explode(' ', $question->tag) as $tag)
-        <button class="btn btn-success btn-sm">{{ $tag }}</button>
+        <span class="badge badge-success badge-pill">{{ $tag }}</span>
       @endforeach
+      <p class="card-text">{!! $question->isi !!}</p>
     </div>
     <div class="card-footer text-muted">
       Tanggal Dibuat : {{ $question->created_at }} -
