@@ -109,7 +109,23 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         $questions = Question::find($id);
-        $questions->Answers()->comments()->delete();
+        $answers = $questions->Answers;
+        
+        foreach ($answers as $answer) {
+            $comments = $answer -> comments;
+            $answer -> comments()-> detach();
+            foreach ($comments as $comment){
+                $comment -> delete();
+            };
+            $answer -> delete();
+        }
+
+        $comments = $questions -> comments;
+        $questions -> comments() -> detach();
+        foreach ($comments as $comment){
+            $comment -> delete();
+        };
+
         $questions->delete();
 
         return redirect('/questions');
