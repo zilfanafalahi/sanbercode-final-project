@@ -30,8 +30,15 @@
     @foreach ($answers as $answer)
         <div class="card text-left my-2">
             <div class="card-body">
-              <h4><b>Jawaban #{{ $answer->id }}</b></h4>
+              <div class="row">
+                <h4><b>Jawaban #{{ $answer->id }}</b></h4>
+                <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">0</span>)</button>
+                <button type="button"  id="upvote" onClick="upvote();" class="btn btn-success mr-2 btn-sm">Upvote</button>
+                <button type="button" id="downvote" onClick="downvote();" class="btn btn-danger btn-sm">Downvote</button>
+              </div>
               <p class="card-text">{!! $answer->isi !!}</p>
+            </div>
+            <div class="card-footer">
               <div>
                 <a href="/answers/{{$question->id}}/{{$answer->id}}/comments" class="btn btn-secondary mr-1 btn-sm">Show Comments</a>
                 <a href="/answers/{{$question->id}}/{{$answer->id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
@@ -63,6 +70,26 @@
 
 @push('scripts-footer')
 <script>
+  // increment upvote
+  var add = document.getElementById("upvote")
+
+  function upvote(add) {
+    var num = parseInt(document.getElementById("jumlah").innerHTML);
+    const test = true;
+    add = test ? num++ : num--;
+    document.getElementById("jumlah").innerHTML = num;
+  }
+
+  // decrement upvote
+  var add = document.getElementById("downvote")
+
+  function downvote(add) {
+    var num = parseInt(document.getElementById("jumlah").innerHTML);
+    const test = false;
+    add = test ? num++ : num--;
+    document.getElementById("jumlah").innerHTML = num;
+  }
+
   var editor_config = {
     path_absolute : "/",
     selector: "textarea.my-editor",
@@ -97,6 +124,5 @@
   };
 
   tinymce.init(editor_config);
-
 </script>
 @endpush
