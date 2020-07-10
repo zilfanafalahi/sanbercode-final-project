@@ -9,9 +9,11 @@ use App\Answer;
 
 class AnswerController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-    
     public function store(Request $request, $id)
     {      
         $new_answers = new Answer([

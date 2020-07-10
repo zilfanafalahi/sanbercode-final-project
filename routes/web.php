@@ -12,12 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/template', function () {
-    return view('adminlte.master');
-});
+    return view('auth.login');
+})->middleware('auth');
 
 Auth::routes();
 
@@ -28,22 +24,24 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 // Route CRUD
-Route::get('answers/{id}', 'AnswerController@show');
-Route::post('answers/{id}', 'AnswerController@store');
-Route::get('answers/{q_id}/{id}/edit', 'AnswerController@edit');
-Route::put('answers/{q_id}/{id}', 'AnswerController@update');
-Route::delete('answers/{q_id}/{id}', 'AnswerController@destroy');
-Route::post('answers/{id}', 'AnswerController@store');
-Route::get('/questions/{id}/comments', 'CommentController@show_question');
-Route::post('/questions/{id}/comments', 'CommentController@store_question');
-Route::get('/answers/{q_id}/{id}/comments', 'CommentController@show_answer');
-Route::post('/answers/{q_id}/{id}/comments', 'CommentController@store_answer');
-Route::get('/questions/{q_id}/comments/{id}/edit', 'CommentController@edit_question');
-Route::put('/questions/{q_id}/comments/{id}', 'CommentController@update_question');
-Route::delete('/questions/{q_id}/comments/{id}', 'CommentController@destroy_question');
-Route::get('/answers/{q_id}/{a_id}/comments/{id}/edit', 'CommentController@edit_answer');
-Route::put('/answers/{q_id}/{a_id}/comments/{id}', 'CommentController@update_answer');
-Route::delete('/answers/{q_id}/{a_id}/comments/{id}', 'CommentController@destroy_answer');
-Route::resource('questions', 'QuestionController');
-Route::resource('reputations', 'ReputationController');
-Route::resource('votes', 'VoteController');
+Route::group(['middleware' => 'auth'], function(){  
+    Route::get('answers/{id}', 'AnswerController@show');
+    Route::post('answers/{id}', 'AnswerController@store');
+    Route::get('answers/{q_id}/{id}/edit', 'AnswerController@edit');
+    Route::put('answers/{q_id}/{id}', 'AnswerController@update');
+    Route::delete('answers/{q_id}/{id}', 'AnswerController@destroy');
+    Route::post('answers/{id}', 'AnswerController@store');
+    Route::get('/questions/{id}/comments', 'CommentController@show_question');
+    Route::post('/questions/{id}/comments', 'CommentController@store_question');
+    Route::get('/answers/{q_id}/{id}/comments', 'CommentController@show_answer');
+    Route::post('/answers/{q_id}/{id}/comments', 'CommentController@store_answer');
+    Route::get('/questions/{q_id}/comments/{id}/edit', 'CommentController@edit_question');
+    Route::put('/questions/{q_id}/comments/{id}', 'CommentController@update_question');
+    Route::delete('/questions/{q_id}/comments/{id}', 'CommentController@destroy_question');
+    Route::get('/answers/{q_id}/{a_id}/comments/{id}/edit', 'CommentController@edit_answer');
+    Route::put('/answers/{q_id}/{a_id}/comments/{id}', 'CommentController@update_answer');
+    Route::delete('/answers/{q_id}/{a_id}/comments/{id}', 'CommentController@destroy_answer');
+    Route::resource('questions', 'QuestionController');
+    Route::resource('reputations', 'ReputationController');
+    Route::resource('votes', 'VoteController');
+});
