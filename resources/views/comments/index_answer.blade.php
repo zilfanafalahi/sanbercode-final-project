@@ -64,7 +64,7 @@
             @endif
                 <div class="card bg-light">
                     <div class="card-body">
-                        <form action="/questions/{{$question->id}}/comments" method="post">
+                        <form action="/answers/{{$question->id}}/{{$answer->id}}/comments/" method="post">
                             @csrf
                             <div class="form-group">
                               <textarea class="form-control my-editor" name="isi" rows="3" placeholder="Write Your Comment Here.. :') "></textarea>
