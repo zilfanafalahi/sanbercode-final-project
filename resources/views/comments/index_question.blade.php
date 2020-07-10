@@ -5,10 +5,12 @@
 @endpush
 
 @section('content')
-    <a href="/answers/{{$question->id}}" class="btn btn-warning mb-2">Kembali</a>
   <div class="card text-left">
     <div class="card-body">
-      <h3><b>{{ $question->judul }}</b></h3>
+      <div class="row">
+        <h3><b>{{ $question->judul }}</b></h3>
+        <a href="/answers/{{$question->id}}" class="btn btn-warning ml-auto">Kembali</a>
+      </div>
       @foreach (explode(' ', $question->tag) as $tag)
         <span class="badge badge-success badge-pill">{{ $tag }}</span>
       @endforeach
@@ -31,7 +33,7 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <i>{!! $item->isi !!}</i>
-                    </div>
+                    </div> 
                     <div class="card-footer">
                       <a href="comments/{{$item -> id}}/edit" class="btn mr-1 btn-primary btn-sm">Edit</a>
                       <form action="comments/{{$item -> id}}" method="POST" class="d-inline">
