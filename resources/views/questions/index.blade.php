@@ -7,7 +7,7 @@
         <div class="card-body">
           <div class="row">
             <h3><b>{{ $q->judul }}</b></h3>
-            <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">0</span>)</button>
+            <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">{{ $poin[$q->id] }}</span>)</button>
             <button type="button"  id="upvote" onClick="upvote();" class="btn btn-success mr-2 btn-sm">Upvote</button>
             <button type="button" id="downvote" onClick="downvote();" class="btn btn-danger btn-sm">Downvote</button>
           </div>
@@ -40,6 +40,7 @@
       const test = true;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
+      window.location.href = "/questions/upvotes/{{ $q->id }}"
     }
 
     // decrement upvote
@@ -50,6 +51,7 @@
       const test = false;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
+      window.location.href = "/questions/downvotes/{{ $q->id }}"
     }
   </script>
 @endpush
