@@ -52,6 +52,7 @@
       const test = true;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
+      break;
     }
 
     // decrement upvote
@@ -62,6 +63,7 @@
       const test = false;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
+      break;
     }
   </script>
 @endpush
