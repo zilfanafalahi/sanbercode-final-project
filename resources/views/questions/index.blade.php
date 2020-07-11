@@ -13,7 +13,7 @@
               <a class="btn btn-danger mr-2 disabled">Downvote</a>
             @else
               @if ($voted[$q->id] == -1)
-                <a href="/questions/upvotes/{{ $q->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+                <a class="btn btn-success mr-2 disabled">Upvote</a>
                 <a class="btn btn-danger mr-2 disabled">Downvote</a>
               @else
                 <a href="/questions/upvotes/{{ $q->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>

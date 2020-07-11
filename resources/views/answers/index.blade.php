@@ -37,8 +37,8 @@
                   <a class="btn btn-success mr-2 disabled">Upvote</a>
                   <a class="btn btn-danger mr-2 disabled">Downvote</a>
                 @else
-                  @if ($voted[$answer->id] == -1)
-                    <a href="/answers/upvotes/{{ $question->id }}/{{ $answer->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+                  @if ($voted[$answer->id] == -1)    
+                    <a class="btn btn-success mr-2 disabled">Upvote</a>
                     <a class="btn btn-danger mr-2 disabled">Downvote</a>
                   @else
                     <a href="/answers/upvotes/{{ $question->id }}/{{ $answer->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
