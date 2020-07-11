@@ -32,10 +32,15 @@
             <div class="card-body">
               <div class="row">
                 <h4><b>Jawaban #{{ $answer->id }}</b></h4>
-                <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">0</span>)</button>
-                <button type="button"  id="upvote" onClick="upvote();" class="btn btn-success mr-2 btn-sm">Upvote</button>
-                <button type="button" id="downvote" onClick="downvote();" class="btn btn-danger btn-sm">Downvote</button>
-              </div>
+                <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">{{ $poin[$answer->id] }}</span>)</button>
+                @if ($reputasi < 15)
+                  <a class="btn btn-success mr-2 disabled">Upvote</a>
+                  <a class="btn btn-danger mr-2 disabled">Downvote</a>
+                @else
+                  <a href="/answers/upvotes/{{ $question->id }}/{{ $answer->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+                  <a href="/answers/downvotes/{{ $question->id }}/{{ $answer->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
+                @endif
+                  </div>
               <p class="card-text">{!! $answer->isi !!}</p>
             </div>
             <div class="card-footer">
@@ -72,6 +77,14 @@
 
 @push('scripts-footer')
 <script>
+  function reputasi() {
+    document.getElementById("reputasi").innerHTML = "Your Reputations : {{ $reputasi }}";
+  }
+  reputasi();
+</script>
+
+<script>
+
   // increment upvote
   var add = document.getElementById("upvote")
 

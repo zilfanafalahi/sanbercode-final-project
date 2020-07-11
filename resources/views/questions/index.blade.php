@@ -8,8 +8,13 @@
           <div class="row">
             <h3><b>{{ $q->judul }}</b></h3>
             <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">{{ $poin[$q->id] }}</span>)</button>
-            <a href="/questions/upvotes/{{ $q->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
-            <a href="/questions/downvotes/{{ $q->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
+            @if ($reputasi < 15)
+              <a class="btn btn-success mr-2 disabled">Upvote</a>
+              <a class="btn btn-danger mr-2 disabled">Downvote</a>
+            @else
+              <a href="/questions/upvotes/{{ $q->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+              <a href="/questions/downvotes/{{ $q->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
+            @endif
           </div>
           <p class="card-text">{!! $q->isi !!}</p>
           <p class=" text-muted">Tanggal dibuat : {{ $q->created_at }}</p>
@@ -50,6 +55,7 @@
     }
 
     // decrement upvote
+    var add = document.getElementById("downvote")
 
     function downvote(add) {
       var num = parseInt(document.getElementById("jumlah").innerHTML);
