@@ -23,7 +23,16 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = Question::all();
-        return view('questions.index', compact('questions'));
+        $poin = [];
+        foreach ($questions as $q) {
+            $temp_poin = 0;
+            $votes = $q->votes;
+            foreach ($votes as $vote) {
+                $temp_poin += $vote->poin;
+            }
+            $poin[$q->id] = $temp_poin;
+        }
+        return view('questions.index', compact('questions','poin'));
     }
 
     /**
