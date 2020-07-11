@@ -105,14 +105,21 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         $questions = Question::find($id);
+
         $answers = $questions->Answers;
-        
         foreach ($answers as $answer) {
             $comments = $answer -> comments;
             $answer -> comments()-> detach();
             foreach ($comments as $comment){
                 $comment -> delete();
             };
+
+            $votes = $answer->votes;
+            $answer->votes()->detach();
+            foreach ($votes as $vote) {
+                $vote -> delete();
+            }
+
             $answer -> delete();
         }
 
@@ -121,6 +128,12 @@ class QuestionController extends Controller
         foreach ($comments as $comment){
             $comment -> delete();
         };
+
+        $votes = $questions->votes;
+        $questions->votes()->detach();
+        foreach ($votes as $vote) {
+            $vote -> delete();
+        }
 
         $questions->delete();
 

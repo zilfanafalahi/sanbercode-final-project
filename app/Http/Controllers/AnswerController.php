@@ -53,18 +53,6 @@ class AnswerController extends Controller
                 $contributor->update(['poin' => $new_poin]);
             }
 
-            $user = Reputation::firstWhere('users_id',Auth::id());
-
-            //jika id tidak ditemukan dalam record reputasi
-            if(!$user){
-                $user = Reputation::Create([
-                    "poin" => 0,
-                    "users_id" => Auth::id(),
-                ]);
-            };
-
-            $reputasi = $user->poin;
-
             //cek apakah sudah pernah vote
             $voters = $a->votes->firstWhere('voter_user_id',Auth::id());
             if($voters){
@@ -74,6 +62,18 @@ class AnswerController extends Controller
             }
         }
         
+        $user = Reputation::firstWhere('users_id',Auth::id());
+
+        //jika id tidak ditemukan dalam record reputasi
+        if(!$user){
+            $user = Reputation::Create([
+                "poin" => 0,
+                "users_id" => Auth::id(),
+            ]);
+        };
+
+        $reputasi = $user->poin;
+
         return view('answers.index', compact('question','answers','poin','reputasi','voted'));
     }
 
@@ -97,11 +97,19 @@ class AnswerController extends Controller
     public function destroy($q_id,$id)
     {
         $answer = Answer::find($id);
+
         $comment = $answer -> comments;
         $answer -> comments()-> detach();
         foreach ($comment as $comments){
             $comments -> delete();
         };
+
+        $votes = $answer->votes;
+        $answer->votes()->detach();
+        foreach ($votes as $vote) {
+            $vote -> delete();
+        }
+
         $answer -> delete();
         return redirect("answers/$q_id");
     }
