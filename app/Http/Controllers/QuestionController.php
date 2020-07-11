@@ -16,7 +16,11 @@ class QuestionController extends Controller
         $this->middleware('auth');
     }
     
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {   
         $user = Reputation::firstWhere('users_id',Auth::id());
@@ -33,31 +37,33 @@ class QuestionController extends Controller
 
         $questions = Question::all();
         $poin = [];
-        $voted = [];
         foreach ($questions as $q) {
             $temp_poin = 0;
             $votes = $q->votes;
             foreach ($votes as $vote) {
-                $temp_poin = $temp_poin + $vote->poin;
+                $temp_poin += $vote->poin;
             }
             $poin[$q->id] = $temp_poin;
-
-            //cek apakah sudah pernah vote
-            $voters = $q->votes->firstWhere('voter_user_id',Auth::id());
-            if($voters){
-                $voted[$q->id] = $voters -> poin;
-            } else {
-                $voted[$q->id] = 0;
-            }
         }
-        return view('questions.index', compact('questions','poin','reputasi','voted'));
+        return view('questions.index', compact('questions','poin','reputasi'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('questions.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -78,18 +84,37 @@ class QuestionController extends Controller
         return redirect('/questions');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         $questions = Question::find($id);
         return view('questions.show', compact('questions'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         $questions = Question::find($id);
         return view('questions.edit', compact('questions'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $this->validate($request,[
@@ -102,24 +127,23 @@ class QuestionController extends Controller
         return redirect('/questions');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $questions = Question::find($id);
-
         $answers = $questions->Answers;
+        
         foreach ($answers as $answer) {
             $comments = $answer -> comments;
             $answer -> comments()-> detach();
             foreach ($comments as $comment){
                 $comment -> delete();
             };
-
-            $votes = $answer->votes;
-            $answer->votes()->detach();
-            foreach ($votes as $vote) {
-                $vote -> delete();
-            }
-
             $answer -> delete();
         }
 
@@ -129,14 +153,18 @@ class QuestionController extends Controller
             $comment -> delete();
         };
 
-        $votes = $questions->votes;
-        $questions->votes()->detach();
-        foreach ($votes as $vote) {
-            $vote -> delete();
-        }
-
         $questions->delete();
 
         return redirect('/questions');
+    }
+
+    public function cari(Request $request)
+    {
+        $cari = $request->get('cari');
+        $questions = DB::questions('questions')
+        ->where('questions','like',"%".$cari."%")
+        ->paginate();
+ 
+        return view('index',['questions' => $cari]);
     }
 }

@@ -15,14 +15,6 @@ class VoteController extends Controller
     public function upvotes_question($q_id)
     {   
         $question = Question::find($q_id);
-
-        // ngecek apakah dah pernah ngevote
-        $hasVoted = $question -> votes ->firstWhere('voter_user_id',Auth::id());
-        if ($hasVoted){
-            $question -> votes() -> detach();
-            $hasVoted->delete();
-        };
-
         $new_vote = Vote::create([
             'poin' => 1,
             'voter_user_id' => Auth::id()
@@ -40,14 +32,6 @@ class VoteController extends Controller
     public function downvotes_question($q_id)
     {   
         $question = Question::find($q_id);
-
-        // ngecek apakah dah pernah ngevote
-        $hasVoted = $question -> votes ->firstWhere('voter_user_id',Auth::id());
-        if ($hasVoted){
-            $question -> votes() -> detach();
-            $hasVoted->delete();
-        };
-
         $new_vote = Vote::create([
             'poin' => -1,
             'voter_user_id' => Auth::id()
@@ -65,14 +49,6 @@ class VoteController extends Controller
     public function upvotes_answer($q_id,$a_id)
     {   
         $answer = answer::find($a_id);
-
-        // ngecek apakah dah pernah ngevote
-        $hasVoted = $answer -> votes ->firstWhere('voter_user_id',Auth::id());
-        if ($hasVoted){
-            $answer -> votes() -> detach();
-            $hasVoted->delete();
-        };
-
         $new_vote = Vote::create([
             'poin' => 1,
             'voter_user_id' => Auth::id()
@@ -90,14 +66,6 @@ class VoteController extends Controller
     public function downvotes_answer($q_id,$a_id)
     {   
         $answer = answer::find($a_id);
-
-        //nambah poin utk pemberi jawaban
-        $hasVoted = $answer -> votes ->firstWhere('voter_user_id',Auth::id());
-        if ($hasVoted){
-            $answer -> votes() -> detach();
-            $hasVoted->delete();
-        };
-
         $new_vote = Vote::create([
             'poin' => -1,
             'voter_user_id' => Auth::id()

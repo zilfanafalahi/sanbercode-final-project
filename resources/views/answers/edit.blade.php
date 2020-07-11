@@ -5,11 +5,11 @@
 @endpush
 
 @section('content')
+    <a href="/answers/{{ $question->id }}" class="btn btn-warning ml-auto mb-2">Kembali</a>
   <div class="card text-left">
     <div class="card-body">
         <div class="row">
             <h3><b>{{ $question->judul }}</b></h3>
-            <a href="/answers/{{ $question->id }}" class="btn btn-warning ml-auto mb-2">Kembali</a>
         </div>
       <p class="card-text">{!! $question->isi !!}</p>
     </div>
