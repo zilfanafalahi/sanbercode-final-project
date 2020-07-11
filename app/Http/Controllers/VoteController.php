@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Question;
 use App\Answer;
 use App\Vote;
+use App\Reputation;
 
 
 class VoteController extends Controller
@@ -19,6 +20,12 @@ class VoteController extends Controller
             'voter_user_id' => Auth::id()
         ]);
         $question -> votes() -> attach($new_vote);
+        
+        //nambah poin utk penanya
+        $askers = Reputation::firstWhere('users_id',$question->users_id);
+        $new_poin = $askers->poin + 10;
+        $askers->update(['poin' => $new_poin]);
+
         return redirect('/questions');
     }
 
@@ -30,6 +37,12 @@ class VoteController extends Controller
             'voter_user_id' => Auth::id()
         ]);
         $question -> votes() -> attach($new_vote);
+
+        //ngurang poin utk penanya
+        $askers = Reputation::firstWhere('users_id',$question->users_id);
+        $new_poin = $askers->poin - 1;
+        $askers->update(['poin' => $new_poin]);
+
         return redirect('/questions');
     }
 }

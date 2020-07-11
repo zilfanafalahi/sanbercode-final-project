@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Question;
 use App\Answer;
 use App\Comment;
+use App\Reputation;
 
 class QuestionController extends Controller
 {
@@ -21,7 +22,19 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $user = Reputation::firstWhere('users_id',Auth::id());
+
+        //jika id tidak ditemukan dalam record reputasi
+        if(!$user){
+            $user = Reputation::Create([
+                "poin" => 0,
+                "users_id" => Auth::id(),
+            ]);
+        };
+
+        $reputasi = $user->poin;
+
         $questions = Question::all();
         $poin = [];
         foreach ($questions as $q) {
@@ -32,7 +45,7 @@ class QuestionController extends Controller
             }
             $poin[$q->id] = $temp_poin;
         }
-        return view('questions.index', compact('questions','poin'));
+        return view('questions.index', compact('questions','poin','reputasi'));
     }
 
     /**
