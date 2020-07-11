@@ -18,5 +18,10 @@ class Answer extends Model
     {
         return $this->belongsToMany('App\Comment','answer_comments');
     }
+
+    public function votes()
+    {
+        return $this->belongsToMany('App\Vote', 'answer_votes');
+    }
 }
 

@@ -14,4 +14,8 @@ class Vote extends Model
         return $this->belongsToMany('App\Question', 'question_votes');
     }
 
+    public function answers()
+    {
+        return $this->belongsToMany('App\Answer', 'answer_votes');
+    }
 }

@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/answers/{q_id}/{a_id}/comments/{id}', 'CommentController@destroy_answer');
     Route::get('questions/upvotes/{q_id}','VoteController@upvotes_question');
     Route::get('questions/downvotes/{q_id}','VoteController@downvotes_question');
+    Route::get('answers/upvotes/{q_id}/{a_id}','VoteController@upvotes_answer');
+    Route::get('answers/downvotes/{q_id}/{a_id}','VoteController@downvotes_answer');
     Route::resource('questions', 'QuestionController');
     Route::resource('reputations', 'ReputationController');
 });

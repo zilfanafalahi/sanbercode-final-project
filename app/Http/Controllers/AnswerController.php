@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Question;
 use App\Answer;
+use App\Comment;
+use App\Reputation;
 
 class AnswerController extends Controller
 {
@@ -28,10 +30,33 @@ class AnswerController extends Controller
     }
 
     public function show($id)
-    {
+    {   
+        $user = Reputation::firstWhere('users_id',Auth::id());
+
+        //jika id tidak ditemukan dalam record reputasi
+        if(!$user){
+            $user = Reputation::Create([
+                "poin" => 0,
+                "users_id" => Auth::id(),
+            ]);
+        };
+
+        $reputasi = $user->poin;
+
         $question = Question::find($id);
         $answers = $question->Answers;
-        return view('answers.index', compact('question','answers'));
+
+        $poin = [];
+        foreach ($answers as $a) {
+            $temp_poin = 0;
+            $votes = $a->votes;
+            foreach ($votes as $vote) {
+                $temp_poin += $vote->poin;
+            }
+            $poin[$a->id] = $temp_poin;
+        }
+        
+        return view('answers.index', compact('question','answers','poin','reputasi'));
     }
 
     public function edit($q_id,$id)
