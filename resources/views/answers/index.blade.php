@@ -33,15 +33,23 @@
               <div class="row">
                 <h4><b>Jawaban #{{ $answer->id }}</b></h4>
                 <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">{{ $poin[$answer->id] }}</span>)</button>
-                @if ($reputasi < 15)
+                @if (($reputasi < 15) || ($answer->answer_user_id == Auth::id()) || ($voted[$answer->id] == 1))
                   <a class="btn btn-success mr-2 disabled">Upvote</a>
                   <a class="btn btn-danger mr-2 disabled">Downvote</a>
                 @else
-                  <a href="/answers/upvotes/{{ $question->id }}/{{ $answer->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
-                  <a href="/answers/downvotes/{{ $question->id }}/{{ $answer->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
+                  @if ($voted[$answer->id] == -1)
+                    <a href="/answers/upvotes/{{ $question->id }}/{{ $answer->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+                    <a class="btn btn-danger mr-2 disabled">Downvote</a>
+                  @else
+                    <a href="/answers/upvotes/{{ $question->id }}/{{ $answer->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+                    <a href="/answers/downvotes/{{ $question->id }}/{{ $answer->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
+                  @endif
                 @endif
-                  </div>
+              </div>   
               <p class="card-text">{!! $answer->isi !!}</p>
+              @if ($answer->ketepatan_jawaban == 'ya')
+                <div class="badge badge-success ml-auto">Jawaban Tepat</div>
+              @endif
             </div>
             <div class="card-footer">
               <div>
@@ -54,6 +62,7 @@
                     <button type="submit" class="btn mr-1 btn-danger btn-sm">Delete</button>
                   </form>
                 @endif
+                
               </div>
             </div>
         </div>
