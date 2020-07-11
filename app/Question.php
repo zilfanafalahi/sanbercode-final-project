@@ -17,4 +17,9 @@ class Question extends Model
     {
         return $this->belongsToMany('App\Comment', 'comment_questions');
     }
+
+    public function votes()
+    {
+        return $this->belongsToMany('App\Vote', 'question_votes');
+    }
 }
