@@ -8,8 +8,8 @@
           <div class="row">
             <h3><b>{{ $q->judul }}</b></h3>
             <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">{{ $poin[$q->id] }}</span>)</button>
-            <button type="button"  id="upvote" onClick="upvote();" class="btn btn-success mr-2 btn-sm">Upvote</button>
-            <button type="button" id="downvote" onClick="downvote();" class="btn btn-danger btn-sm">Downvote</button>
+            <a href="/questions/upvotes/{{ $q->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+            <a href="/questions/downvotes/{{ $q->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
           </div>
           <p class="card-text">{!! $q->isi !!}</p>
           <p class=" text-muted">Tanggal dibuat : {{ $q->created_at }}</p>
@@ -32,7 +32,14 @@
 
 @push('scripts-footer')
   <script>
+    function reputasi() {
+      document.getElementById("reputasi").innerHTML = "Your Reputations : {{ $reputasi }}";
+    }
+    reputasi();
+  </script>
+  <script>
     // increment upvote
+    
     var add = document.getElementById("upvote")
 
     function upvote(add) {
@@ -40,18 +47,15 @@
       const test = true;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
-      window.location.href = "/questions/upvotes/{{ $q->id }}"
     }
 
     // decrement upvote
-    var add = document.getElementById("downvote")
 
     function downvote(add) {
       var num = parseInt(document.getElementById("jumlah").innerHTML);
       const test = false;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
-      window.location.href = "/questions/downvotes/{{ $q->id }}"
     }
   </script>
 @endpush
