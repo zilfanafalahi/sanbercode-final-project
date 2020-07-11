@@ -93,7 +93,6 @@
 </script>
 
 <script>
-
   // increment upvote
   var add = document.getElementById("upvote")
 
@@ -102,6 +101,7 @@
     const test = true;
     add = test ? num++ : num--;
     document.getElementById("jumlah").innerHTML = num;
+    break;
   }
 
   // decrement upvote
@@ -112,8 +112,11 @@
     const test = false;
     add = test ? num++ : num--;
     document.getElementById("jumlah").innerHTML = num;
+    break;
   }
+</script>
 
+<script>
   var editor_config = {
     path_absolute : "/",
     selector: "textarea.my-editor",
