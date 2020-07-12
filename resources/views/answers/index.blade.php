@@ -32,6 +32,7 @@
             <div class="card-body">
               <div class="row">
                 <h4><b>Jawaban #{{ $answer->id }}</b></h4>
+                <h6><b><span id="best" class="text-danger ml-2"></span></b></h6>
                 <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">{{ $poin[$answer->id] }}</span>)</button>
                 @if (($reputasi < 15) || ($answer->answer_user_id == Auth::id()) || ($voted[$answer->id] == 1))
                   <a class="btn btn-success mr-2 disabled">Upvote</a>
@@ -45,6 +46,7 @@
                     <a href="/answers/downvotes/{{ $question->id }}/{{ $answer->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
                   @endif
                 @endif
+                <button onClick="bestanswer();" class="btn btn-danger mr-2">Best Answers</button>
               </div>   
               <p class="card-text">{!! $answer->isi !!}</p>
               @if ($answer->ketepatan_jawaban == 'ya')
@@ -113,6 +115,12 @@
     add = test ? num++ : num--;
     document.getElementById("jumlah").innerHTML = num;
     break;
+  }
+</script>
+
+<script>
+  function bestanswer() {
+    document.getElementById("best").innerHTML = '(Best Answer)';
   }
 </script>
 
