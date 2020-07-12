@@ -47,5 +47,4 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('answers/downvotes/{q_id}/{a_id}','VoteController@downvotes_answer');
     Route::resource('questions', 'QuestionController');
     Route::resource('reputations', 'ReputationController');
-    Route::get('questions', 'QuestionController@index');
 });

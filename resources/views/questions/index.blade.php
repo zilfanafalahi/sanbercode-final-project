@@ -1,19 +1,24 @@
 @extends('adminlte.master')
 
 @section('content')
-    <a href="/questions/create" class="btn btn-primary mb-3">Create Questions!</a>
+    <a href="/questions/create" class="btn btn-primary mb-3">Create questions!</a>
     @foreach ($questions as $key => $q)
       <div class="card text-left">
         <div class="card-body">
           <div class="row">
             <h3><b>{{ $q->judul }}</b></h3>
             <button class="btn btn-primary ml-auto mr-2" id="cart">Vote : (<span id="jumlah">{{ $poin[$q->id] }}</span>)</button>
-            @if ($reputasi < 15)
+            @if (($reputasi < 15) || ($q->users_id == Auth::id()) || ($voted[$q->id] == 1))
               <a class="btn btn-success mr-2 disabled">Upvote</a>
               <a class="btn btn-danger mr-2 disabled">Downvote</a>
             @else
-              <a href="/questions/upvotes/{{ $q->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
-              <a href="/questions/downvotes/{{ $q->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
+              @if ($voted[$q->id] == -1)
+                <a class="btn btn-success mr-2 disabled">Upvote</a>
+                <a class="btn btn-danger mr-2 disabled">Downvote</a>
+              @else
+                <a href="/questions/upvotes/{{ $q->id }}" onClick="upvote();" class="btn btn-success mr-2">Upvote</a>
+                <a href="/questions/downvotes/{{ $q->id }}" onClick="downvote();" class="btn btn-danger mr-2">Downvote</a>
+              @endif
             @endif
           </div>
           <p class="card-text">{!! $q->isi !!}</p>
@@ -52,6 +57,7 @@
       const test = true;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
+      break;
     }
 
     // decrement upvote
@@ -62,6 +68,7 @@
       const test = false;
       add = test ? num++ : num--;
       document.getElementById("jumlah").innerHTML = num;
+      break;
     }
   </script>
 @endpush

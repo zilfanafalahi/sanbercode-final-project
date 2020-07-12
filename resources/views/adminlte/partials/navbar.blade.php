@@ -1,21 +1,10 @@
-  <nav class="main-header navbar navbar-expand navbar-teal navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
     </ul>
-
-  <form class="form-inline">
-    <div class="input-group">
-      <input class="form-control form-control-sidebar" type="search" placeholder="Search Questions" aria-label="Search">
-    <div class="input-group-append">
-      <button class="btn btn-sidebar" type="submit">
-        <i class="fas fa-search"></i>
-      </button>
-    </div>
-  </div>
-  </form>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
