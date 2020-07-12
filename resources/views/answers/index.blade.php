@@ -47,11 +47,12 @@
                   @endif
                 @endif
                 <button onClick="bestanswer();" class="btn btn-danger mr-2">Best Answers</button>
+                @if ($answer->ketepatan_jawaban == 'ya')
+                  <div class="btn btn-success mr-2">Jawaban Tepat</div>
+                @endif
               </div>   
               <p class="card-text">{!! $answer->isi !!}</p>
-              @if ($answer->ketepatan_jawaban == 'ya')
-                <div class="badge badge-success ml-auto">Jawaban Tepat</div>
-              @endif
+              
             </div>
             <div class="card-footer">
               <div>
